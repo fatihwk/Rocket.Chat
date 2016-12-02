@@ -115,6 +115,7 @@ rocketchat:ui-account
 rocketchat:ui-admin
 rocketchat:ui-flextab
 rocketchat:ui-login
+rocketchat:ui-loginex
 rocketchat:ui-master
 rocketchat:ui-message
 rocketchat:ui-sidenav
@@ -162,3 +163,4 @@ underscorestring:underscore.string
 yasaricli:slugify
 yasinuslu:blaze-meta
 deepwell:bootstrap-datepicker2
+meteorhacks:kadira

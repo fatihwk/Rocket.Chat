@@ -77,6 +77,8 @@ meteor@1.6.0
 meteor-base@1.0.4
 meteor-developer@1.1.10
 meteorhacks:inject-initial@1.0.4
+meteorhacks:kadira@2.30.2
+meteorhacks:meteorx@1.4.1
 meteorspark:util@0.2.0
 minifier-css@1.2.15
 minifier-js@1.2.15
@@ -204,6 +206,7 @@ rocketchat:ui-account@0.1.0
 rocketchat:ui-admin@0.1.0
 rocketchat:ui-flextab@0.1.0
 rocketchat:ui-login@0.1.0
+rocketchat:ui-loginex@0.1.0
 rocketchat:ui-master@0.1.0
 rocketchat:ui-message@0.1.0
 rocketchat:ui-sidenav@0.1.0
