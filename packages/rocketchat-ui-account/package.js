@@ -19,6 +19,10 @@ Package.onUse(function(api) {
 		'rocketchat:lib',
 		'sha'
 	]);
+	// api.addFiles('account/login/loginex.html', 'client');
+	// api.addFiles('account/login/loginex.js', 'client');
+	// api.addFiles('account/login/loginex.coffee', 'client');
+
 
 	api.addFiles('account/account.html', 'client');
 	api.addFiles('account/accountFlex.html', 'client');

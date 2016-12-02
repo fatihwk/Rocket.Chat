@@ -89,6 +89,14 @@ FlowRouter.route '/privacy-policy',
 		Session.set 'cmsPage', 'Layout_Privacy_Policy'
 		BlazeLayout.render 'cmsPage'
 
+FlowRouter.route '/loginex',
+	name: 'loginex'
+	
+	action: ->
+		BlazeLayout.render 'loginExForm'
+
+
+
 FlowRouter.route '/room-not-found/:type/:name',
 	name: 'room-not-found'
 
