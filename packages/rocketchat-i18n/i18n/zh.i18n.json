@@ -38,6 +38,7 @@
   "Accounts_Iframe_api_url": "API URL",
   "Accounts_iframe_enabled": "已启用",
   "Accounts_iframe_url": "框架地址",
+  "Accounts_loginex_api_url":"第三方登录API地址",
   "Accounts_LoginExpiration": "登录失效天数",
   "Accounts_ManuallyApproveNewUsers": "手动审核新用户",
   "Accounts_OAuth_Custom_Authorize_Path": "自定义 OAuth 的认证地址 ",

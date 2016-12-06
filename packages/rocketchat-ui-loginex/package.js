@@ -22,21 +22,16 @@ Package.onUse(function(api) {
 	]);
 
 
-	api.addFiles('loginex/header.html', 'client');
+		api.addFiles('loginex/loginex_rocketchat.js', 'server');
 
 
-  api.addFiles('loginex/footer.html', 'client');
-
-	api.addFiles('loginex/form.html', 'client');
-	api.addFiles('loginex/form.coffee', 'client');
-
-
-
+		api.addFiles('loginex/header.html', 'client');
+	  api.addFiles('loginex/footer.html', 'client');
+		api.addFiles('loginex/form.html', 'client');
+		api.addFiles('loginex/form.coffee', 'client');
 		api.addFiles('loginex/loginex.html', 'client');
 	  api.addFiles('loginex/loginex.js', 'client');
 		api.addFiles('loginex/loginex.coffee', 'client');
-
-
 
 
 });
