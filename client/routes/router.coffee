@@ -93,7 +93,8 @@ FlowRouter.route '/loginex',
 	name: 'loginex'
 
 	action: ->
-		BlazeLayout.render 'loginExForm' 
+		BlazeLayout.render 'loginExLayout';
+
 
 
 

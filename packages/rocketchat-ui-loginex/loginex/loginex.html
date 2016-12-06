@@ -1,12 +1,9 @@
-<template name="loginExForm">
-  <form id="login-card"  >
-
-     <h1>External User Login </h1>
-      <input type="text" name="username"/>
-
-      <input type="password" name="password"/>
-
-      <button>Login</button>
-  </form>
-  
+<template name="loginExLayout">
+	<section class="full-page">
+		<div class="wrapper">
+			{{ > loginExHeader }}
+			{{ > loginExForm  }}
+			{{ > loginExFooter }}
+		</div>
+	</section>
 </template>
