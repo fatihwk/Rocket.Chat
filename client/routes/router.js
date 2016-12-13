@@ -130,6 +130,15 @@ FlowRouter.route('/fxos', {
 	}
 });
 
+FlowRouter.route('/loginex',{
+	name: 'loginex',
+	action(){
+		BlazeLayout.render('loginExLayout');  
+	}
+
+}); 
+ 
+
 FlowRouter.route('/register/:hash', {
 	name: 'register-secret-url',
 
