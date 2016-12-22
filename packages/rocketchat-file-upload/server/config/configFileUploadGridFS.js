@@ -1,8 +1,8 @@
 /* globals FileUpload, UploadFS */
-var stream = Npm.require('stream');
-var zlib = Npm.require('zlib');
-var util = Npm.require('util');
-
+const stream = Npm.require('stream');
+const zlib = Npm.require('zlib');
+const util = Npm.require('util');
+const logger = new Logger('FileUpload');
 
 function ExtractRange(options) {
 	if (!(this instanceof ExtractRange)) {
@@ -48,8 +48,10 @@ var getByteRange = function(header) {
 	if (header) {
 		var matches = header.match(/(\d+)-(\d+)/);
 		if (matches) {
-			return {start: parseInt(matches[1], 10),
-					stop: parseInt(matches[2], 10)};
+			return {
+				start: parseInt(matches[1], 10),
+				stop: parseInt(matches[2], 10)
+			};
 		}
 	}
 	return null;
@@ -113,7 +115,8 @@ var readFromGridFS = function(storeName, fileId, file, headers, req, res) {
 		delete headers['Content-Length'];
 		headers['Content-Length'] = range.stop - range.start + 1;
 		res.writeHead(206, headers);
-		ws.pipe(new ExtractRange({start: range.start, stop: range.stop})).pipe(res);
+		logger.debug('File upload extracting range');
+		ws.pipe(new ExtractRange({ start: range.start, stop: range.stop })).pipe(res);
 	} else {
 		res.writeHead(200, headers);
 		ws.pipe(res);
@@ -135,3 +138,4 @@ FileUpload.addHandler('rocketchat_uploads', {
 		return Meteor.fileStore.delete(file._id);
 	}
 });
+
