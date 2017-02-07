@@ -1,7 +1,7 @@
 /* globals Push */
 class PushNotification {
 	getNotificationId(roomId) {
-		let serverId = RocketChat.settings.get('uniqueID');
+		const serverId = RocketChat.settings.get('uniqueID');
 		return this.hash(`${serverId}|${roomId}`); // hash
 	}
 
@@ -24,11 +24,11 @@ class PushNotification {
 		} else {
 			title = `${username}`;
 		}
-		let icon = RocketChat.settings.get('Assets_favicon_192').url || RocketChat.settings.get('Assets_favicon_192').defaultUrl;
+		const icon = RocketChat.settings.get('Assets_favicon_192').url || RocketChat.settings.get('Assets_favicon_192').defaultUrl;
 		const config = {
 			from: 'push',
 			badge: 1,
-			sound: 'chime',
+			sound: 'default',
 			title: title,
 			text: message,
 			payload,
