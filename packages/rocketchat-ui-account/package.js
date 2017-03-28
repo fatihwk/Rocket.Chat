@@ -24,19 +24,19 @@ Package.onUse(function(api) {
 	// api.addFiles('account/login/loginex.coffee', 'client');
 
 
-	api.addFiles('account/account.html', 'client');
-	api.addFiles('account/accountFlex.html', 'client');
-	api.addFiles('account/accountPreferences.html', 'client');
-	api.addFiles('account/accountProfile.html', 'client');
-	api.addFiles('account/avatar/avatar.html', 'client');
-	api.addFiles('account/avatar/prompt.html', 'client');
+	api.addFiles('client/account.html', 'client');
+	api.addFiles('client/accountFlex.html', 'client');
+	api.addFiles('client/accountPreferences.html', 'client');
+	api.addFiles('client/accountProfile.html', 'client');
+	api.addFiles('client/avatar/avatar.html', 'client');
+	api.addFiles('client/avatar/prompt.html', 'client');
 
-	api.addFiles('account/account.coffee', 'client');
-	api.addFiles('account/accountFlex.coffee', 'client');
-	api.addFiles('account/accountPreferences.coffee', 'client');
-	api.addFiles('account/accountProfile.coffee', 'client');
-	api.addFiles('account/avatar/avatar.coffee', 'client');
-	api.addFiles('account/avatar/prompt.coffee', 'client');
+	api.addFiles('client/account.coffee', 'client');
+	api.addFiles('client/accountFlex.coffee', 'client');
+	api.addFiles('client/accountPreferences.coffee', 'client');
+	api.addFiles('client/accountProfile.coffee', 'client');
+	api.addFiles('client/avatar/avatar.coffee', 'client');
+	api.addFiles('client/avatar/prompt.coffee', 'client');
 
 	// api.addAssets('styles/side-nav.less', 'client');
 });
