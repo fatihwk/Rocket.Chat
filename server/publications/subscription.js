@@ -8,12 +8,16 @@ const fields = {
 	code: 1,
 	f: 1,
 	u: 1,
+	lastActivity: 1,
 	open: 1,
 	alert: 1,
 	roles: 1,
 	unread: 1,
+	userMentions: 1,
+	groupMentions: 1,
 	archived: 1,
-	audioNotification: 1,
+	audioNotifications: 1,
+	audioNotificationValue: 1,
 	desktopNotifications: 1,
 	desktopNotificationDuration: 1,
 	mobilePushNotifications: 1,
@@ -23,7 +27,9 @@ const fields = {
 	blocked: 1,
 	blocker: 1,
 	autoTranslate: 1,
-	autoTranslateLanguage: 1
+	autoTranslateLanguage: 1,
+	disableNotifications: 1,
+	hideUnreadStatus: 1
 };
 
 Meteor.methods({

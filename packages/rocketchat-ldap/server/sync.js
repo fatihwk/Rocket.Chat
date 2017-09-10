@@ -62,18 +62,20 @@ getDataToSyncUserData = function getDataToSyncUserData(ldapUser, user) {
 	const syncUserData = RocketChat.settings.get('LDAP_Sync_User_Data');
 	const syncUserDataFieldMap = RocketChat.settings.get('LDAP_Sync_User_Data_FieldMap').trim();
 
-	if (syncUserData && syncUserDataFieldMap) {
-		const fieldMap = JSON.parse(syncUserDataFieldMap);
-		const userData = {};
+	const userData = {};
 
+	if (syncUserData && syncUserDataFieldMap) {
+		const whitelistedUserFields = ['email', 'name', 'customFields'];
+		const fieldMap = JSON.parse(syncUserDataFieldMap);
 		const emailList = [];
 		_.map(fieldMap, function(userField, ldapField) {
-			if (!ldapUser.object.hasOwnProperty(ldapField)) {
-				return;
-			}
-
 			switch (userField) {
 				case 'email':
+					if (!ldapUser.object.hasOwnProperty(ldapField)) {
+						logger.debug(`user does not have attribute: ${ ldapField }`);
+						return;
+					}
+
 					if (_.isObject(ldapUser.object[ldapField])) {
 						_.map(ldapUser.object[ldapField], function(item) {
 							emailList.push({ address: item, verified: true });
@@ -83,11 +85,19 @@ getDataToSyncUserData = function getDataToSyncUserData(ldapUser, user) {
 					}
 					break;
 
-				case 'name':
-					if (user.name !== ldapUser.object[ldapField]) {
-						userData.name = ldapUser.object[ldapField];
+				default:
+					if (!_.find(whitelistedUserFields, (el) => el === userField.split('.')[0])) {
+						logger.debug(`user attribute not whitelisted: ${ userField }`);
+						return;
 					}
-					break;
+
+					const tmpLdapField = RocketChat.templateVarHandler(ldapField, ldapUser.object);
+					const userFieldValue = _.reduce(userField.split('.'), (acc, el) => acc[el], user);
+
+					if (tmpLdapField && userFieldValue !== tmpLdapField) {
+						userData[userField] = tmpLdapField;
+						logger.debug(`user.${ userField } changed to: ${ tmpLdapField }`);
+					}
 			}
 		});
 
@@ -96,21 +106,21 @@ getDataToSyncUserData = function getDataToSyncUserData(ldapUser, user) {
 				userData.emails = emailList;
 			}
 		}
+	}
 
-		const uniqueId = getLdapUserUniqueID(ldapUser);
+	const uniqueId = getLdapUserUniqueID(ldapUser);
 
-		if (uniqueId && (!user.services || !user.services.ldap || user.services.ldap.id !== uniqueId.value || user.services.ldap.idAttribute !== uniqueId.attribute)) {
-			userData['services.ldap.id'] = uniqueId.value;
-			userData['services.ldap.idAttribute'] = uniqueId.attribute;
-		}
+	if (uniqueId && (!user.services || !user.services.ldap || user.services.ldap.id !== uniqueId.value || user.services.ldap.idAttribute !== uniqueId.attribute)) {
+		userData['services.ldap.id'] = uniqueId.value;
+		userData['services.ldap.idAttribute'] = uniqueId.attribute;
+	}
 
-		if (user.ldap !== true) {
-			userData.ldap = true;
-		}
+	if (user.ldap !== true) {
+		userData.ldap = true;
+	}
 
-		if (_.size(userData)) {
-			return userData;
-		}
+	if (_.size(userData)) {
+		return userData;
 	}
 };
 
@@ -143,16 +153,22 @@ syncUserData = function syncUserData(user, ldapUser) {
 		const avatar = ldapUser.raw.thumbnailPhoto || ldapUser.raw.jpegPhoto;
 		if (avatar) {
 			logger.info('Syncing user avatar');
+
 			const rs = RocketChatFile.bufferToStream(avatar);
-			RocketChatFileAvatarInstance.deleteFile(encodeURIComponent(`${ user.username }.jpg`));
-			const ws = RocketChatFileAvatarInstance.createWriteStream(encodeURIComponent(`${ user.username }.jpg`), 'image/jpeg');
-			ws.on('end', Meteor.bindEnvironment(function() {
+			const fileStore = FileUpload.getStore('Avatars');
+			fileStore.deleteByName(user.username);
+
+			const file = {
+				userId: user._id,
+				type: 'image/jpeg'
+			};
+
+			fileStore.insert(file, rs, () => {
 				Meteor.setTimeout(function() {
 					RocketChat.models.Users.setAvatarOrigin(user._id, 'ldap');
 					RocketChat.Notifications.notifyLogged('updateAvatar', {username: user.username});
 				}, 500);
-			}));
-			rs.pipe(ws);
+			});
 		}
 	}
 };
