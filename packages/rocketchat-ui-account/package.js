@@ -14,9 +14,9 @@ Package.onUse(function(api) {
 	api.use([
 		'ecmascript',
 		'templating',
-		'underscore',
 		'rocketchat:lib',
-		'sha'
+		'sha',
+		'rocketchat:lazy-load'
 	]);
 	// api.addFiles('account/login/loginex.html', 'client');
 	// api.addFiles('account/login/loginex.js', 'client');
